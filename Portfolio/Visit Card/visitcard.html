@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en" >
+<head>
+  <meta charset="UTF-8">
+  <title>Carte de visite</title>
+  <link rel="stylesheet" href="visitcard.css">
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+    <nav>
+        <ul>
+            <li><a href="/index.html">Home</a></li>
+            <li><a href="/A Propos/aboutme.html">À Propos</a></li>
+            <li><a href="/Projects/projects.html">Projets</a></li>
+            <li><a href="/Contact/contact.html">Contact</a></li>
+        </ul>
+    </nav>
+<body>
+		<div id="container">
+			<div id="card" class="bckgr">
+				<div id="text">
+					<h1>Thierry <br> PORTEBOEUF</h1>
+					<h2>Etudiant IT</h2>
+					<h2>France</h2>
+					<h2><span class="plus">+</span> <span class="country code">33</span> 6 67 16 77 30</h2>
+					<h2><a href="mailto:thierryptb97@gmail.com">thierryptb97@gmail.com</a></h2>
+				</div>
+				<img src="frame.png" id="qrcode">
+			</div>
+			<div id="contact" class="bckgr">
+				<form name="contact" action="send.php" method="post">
+					<input name="name" type="name" placeholder="Nom" />
+					<input name="email" type="email" placeholder="Email" />
+					<textarea></textarea>
+					<input type="submit" id="submit" value="Envoyer" />
+					<img src="data:image/gif;base64,R0lGODlhEAAQAPIAAN7d3GZmZsHAwISEhGZmZpOTkqKioaqqqSH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" alt="" width="16" height="16" class="loader" />
+				</form>
+				<div id="answer"></div>
+			</div>
+			<ul id="social">
+				<li><a href="https://www.linkedin.com/in/thierry-porteboeuf-311120257/" onclick="window.open(this.href); return false;"><i class="icon linkedin normal"></i><i class="icon linkedin hover"></i></a></li>
+				<li><a href="https://github.com/Thierryptb" onclick="window.open(this.href); return false;"><i class="icon github normal"></i><i class="icon github hover"></i></a></li>
+			</ul>
+		</div>
+	</body>
+    <div id="cursor" class="cursor">
+        <div class="ring">
+            <div><!--Border--></div>
+        </div>
+        <div class="ring">
+            <div><!--Pointer--></div>		
+        </div>
+    </div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src='//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script><script  src="visitcard.js"></script>
+
+</body>
+</html>

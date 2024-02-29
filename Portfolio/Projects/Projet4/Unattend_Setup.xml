@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<unattend xmlns="urn:schemas-microsoft-com:unattend">
+    <settings pass="windowsPE">
+        <component name="Microsoft-Windows-International-Core-WinPE" processorArchitecture="amd64" publicKeyToken="31bf3856ad364e35" language="neutral" versionScope="nonSxS" xmlns:wcm="http://schemas.microsoft.com/WMIConfig/2002/State" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+            <SetupUILanguage>
+                <UILanguage>fr-FR</UILanguage>
+            </SetupUILanguage>
+            <InputLocale>fr-FR</InputLocale>
+            <SystemLocale>fr-FR</SystemLocale>
+            <UILanguage>fr-FR</UILanguage>
+            <UserLocale>fr-FR</UserLocale>
+        </component>
+        <component name="Microsoft-Windows-Setup" processorArchitecture="amd64" publicKeyToken="31bf3856ad364e35" language="neutral" versionScope="nonSxS" xmlns:wcm="http://schemas.microsoft.com/WMIConfig/2002/State" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+            <WindowsDeploymentServices>
+                <Login>
+                    <Credentials>
+                        <Domain>cleanhouse.adm</Domain>
+                        <Password>Admin@2023-2024</Password>
+                        <Username>deploy@cleanhouse.adm</Username>
+                    </Credentials>
+                </Login>
+            </WindowsDeploymentServices>
+        </component>
+    </settings>
+    <cpi:offlineImage cpi:source="wim://srv-adm-01/reminst/mon-image.wim#mon-image.wim" xmlns:cpi="urn:schemas-microsoft-com:cpi" />
+</unattend>

@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en" >
+<head>
+  <meta charset="UTF-8">
+  <title>ABOUT ME</title>
+  <link rel="stylesheet" href="/styles.css">
+  <link rel="stylesheet" href="./aboutme.css">
+  <nav>
+    <ul>
+        <li><a href="/index.html">Home</a></li>
+        <li><a href="#">À Propos</a></li>
+        <li><a href="/Projects/projects.html">Projets</a></li>
+        <li><a href="/Contact/contact.html">Contact</a></li>
+    </ul>
+</nav>
+</head>
+<body>
+<!-- partial:index.partial.html -->
+<div class="content">
+    <img src="./5734986-abstrait-blanc-et-gris-couleur-moderne-conception-fond-avec-forme-geometrique-vector-illustration-gratuit-vectoriel.jpg"/>
+</div>
+
+<canvas></canvas>
+
+<div class="overlay">
+    ABOUT ME !
+</div>
+
+<div class="overlay2">
+    Bienvenue !<br>
+    <br>
+
+    Je m'appelle Porteboeuf Thierry. Je suis actuellement en BAC +2 technicien informatique systèmes et réseaux.<br>
+
+    En reconversion professionnelle, j'ai eu l'opportunité de pouvoir reprendre les études afin de pouvoir exercer le métier qui me passionne depuis toujours grâce à l'école OpenClassrooms qui propose, des formations en alternance au sein des métiers de l'IT.<br>
+    <br>
+
+    Entamant ce parcours depuis le 15 Avril 2023, ce dernier se terminera donc le 16 Avril 2024.<br>
+
+    Fiducial Informatique a su m'ouvrir ses portes afin de me former pratiquement à ce métier.<br>
+
+    Le but de ce portfolio est donc une annexe de mon curriculum vitae, afin de pouvoir continuer à apprendre.<br>
+    
+    Car effectivement, à l'issue de ma formation actuelle, je souhaiterais poursuivre mes études sur un BAC +4 Administrateur systèmes et réseaux.<br>
+    <br>
+
+    Je vous laisserai donc à vous, lecteurs, parcourir cette page web afin de vous faire valoir les compétences que j'ai pu obtenir lors de mon année en BAC +2 autant en pratique chez Fiducial qu'en théorique chez OpenClassrooms.<br>
+    <br>
+
+    Que serait-ce portfolio sans vous parler un peu de mes motivations ? <br>
+
+    En soif d'apprentissage par ce métier qui me passionne et en rage de motivation de pouvoir poursuivre mes études, je suis donc quelqu'un de motivé, rigoureux, autonome et organisé afin d'intégrer votre entreprise pour que vous puissiez m'apprendre ce futur métier.<br>
+    <br>
+
+    Très à l'écoute et ayant le sens du détail, la relation client ainsi que collaborateur est pour moi primordial afin de pouvoir tirer à profit la meilleure solution possible à chaque problématique.<br>
+    
+
+    Je vous laisse dès à présent découvrir qui suis-je et ce que je sais faire.<br>
+    <br>
+
+    Bonne lecture.<br>
+</div>
+
+
+<script type="x-shader/x-fragment" id="vertShader">
+    precision highp float;
+
+    attribute vec2 aPosition;
+    varying vec2 vUv;
+    varying vec2 vL;
+    varying vec2 vR;
+    varying vec2 vT;
+    varying vec2 vB;
+    uniform vec2 u_vertex_texel;
+
+    void main () {
+        vUv = aPosition * .5 + .5;
+        vL = vUv - vec2(u_vertex_texel.x, 0.);
+        vR = vUv + vec2(u_vertex_texel.x, 0.);
+        vT = vUv + vec2(0., u_vertex_texel.y);
+        vB = vUv - vec2(0., u_vertex_texel.y);
+        gl_Position = vec4(aPosition, 0., 1.);
+    }
+</script>
+
+<script type="x-shader/x-fragment" id="fragShaderAdvection">
+    precision highp float;
+    precision highp sampler2D;
+
+    varying vec2 vUv;
+    uniform sampler2D u_velocity_txr;
+    uniform sampler2D u_input_txr;
+    uniform vec2 u_vertex_texel;
+    uniform vec2 u_output_textel;
+    uniform float u_dt;
+    uniform float u_dissipation;
+
+    vec4 bilerp (sampler2D sam, vec2 uv, vec2 tsize) {
+        vec2 st = uv / tsize - 0.5;
+
+        vec2 iuv = floor(st);
+        vec2 fuv = fract(st);
+
+        vec4 a = texture2D(sam, (iuv + vec2(0.5, 0.5)) * tsize);
+        vec4 b = texture2D(sam, (iuv + vec2(1.5, 0.5)) * tsize);
+        vec4 c = texture2D(sam, (iuv + vec2(0.5, 1.5)) * tsize);
+        vec4 d = texture2D(sam, (iuv + vec2(1.5, 1.5)) * tsize);
+
+        return mix(mix(a, b, fuv.x), mix(c, d, fuv.x), fuv.y);
+    }
+
+    void main () {
+        vec2 coord = vUv - u_dt * bilerp(u_velocity_txr, vUv, u_vertex_texel).xy * u_vertex_texel;
+        gl_FragColor = u_dissipation * bilerp(u_input_txr, coord, u_output_textel);
+        gl_FragColor.a = 1.;
+    }
+</script>
+
+<script type="x-shader/x-fragment" id="fragShaderDivergence">
+    precision highp float;
+    precision highp sampler2D;
+
+    varying highp vec2 vUv;
+    varying highp vec2 vL;
+    varying highp vec2 vR;
+    varying highp vec2 vT;
+    varying highp vec2 vB;
+    uniform sampler2D u_velocity_txr;
+
+    void main () {
+        float L = texture2D(u_velocity_txr, vL).x;
+        float R = texture2D(u_velocity_txr, vR).x;
+        float T = texture2D(u_velocity_txr, vT).y;
+        float B = texture2D(u_velocity_txr, vB).y;
+
+        float div = .5 * (R - L + T - B);
+        gl_FragColor = vec4(div, 0., 0., 1.);
+    }
+</script>
+
+<script type="x-shader/x-fragment" id="fragShaderPressure">
+    precision highp float;
+    precision highp sampler2D;
+
+    varying highp vec2 vUv;
+    varying highp vec2 vL;
+    varying highp vec2 vR;
+    varying highp vec2 vT;
+    varying highp vec2 vB;
+    uniform sampler2D u_pressure_txr;
+    uniform sampler2D u_divergence_txr;
+
+    void main () {
+        float L = texture2D(u_pressure_txr, vL).x;
+        float R = texture2D(u_pressure_txr, vR).x;
+        float T = texture2D(u_pressure_txr, vT).x;
+        float B = texture2D(u_pressure_txr, vB).x;
+        float C = texture2D(u_pressure_txr, vUv).x;
+        float divergence = texture2D(u_divergence_txr, vUv).x;
+        float pressure = (L + R + B + T - divergence) * 0.25;
+        gl_FragColor = vec4(pressure, 0., 0., 1.);
+    }
+</script>
+
+<script type="x-shader/x-fragment" id="fragShaderGradientSubtract">
+    precision highp float;
+    precision highp sampler2D;
+
+    varying highp vec2 vUv;
+    varying highp vec2 vL;
+    varying highp vec2 vR;
+    varying highp vec2 vT;
+    varying highp vec2 vB;
+    uniform sampler2D u_pressure_txr;
+    uniform sampler2D u_velocity_txr;
+
+    void main () {
+        float L = texture2D(u_pressure_txr, vL).x;
+        float R = texture2D(u_pressure_txr, vR).x;
+        float T = texture2D(u_pressure_txr, vT).x;
+        float B = texture2D(u_pressure_txr, vB).x;
+        vec2 velocity = texture2D(u_velocity_txr, vUv).xy;
+        velocity.xy -= vec2(R - L, T - B);
+        gl_FragColor = vec4(velocity, 0., 1.);
+    }
+</script>
+
+<script type="x-shader/x-fragment" id="fragShaderPoint">
+    precision highp float;
+    precision highp sampler2D;
+
+    varying vec2 vUv;
+    uniform sampler2D u_input_txr;
+    uniform float u_ratio;
+    uniform vec3 u_point_value;
+    uniform vec2 u_point;
+    uniform float u_point_size;
+
+    void main () {
+        vec2 p = vUv - u_point.xy;
+        p.x *= u_ratio;
+        vec3 splat = pow(2., -dot(p, p) / u_point_size) * u_point_value;
+        vec3 base = texture2D(u_input_txr, vUv).xyz;
+        gl_FragColor = vec4(base + splat, 1.);
+    }
+</script>
+
+<script type="x-shader/x-fragment" id="fragShaderDisplay">
+    precision highp float;
+    precision highp sampler2D;
+
+    varying vec2 vUv;
+    uniform sampler2D u_output_texture;
+
+    void main () {
+        vec3 C = texture2D(u_output_texture, vUv).rgb;
+        float a = max(C.r, max(C.g, C.b));
+        a = pow(.1 * a, .1);
+        a = clamp(a, 0., 1.);
+        gl_FragColor = vec4(1. - C, 1. - a);
+    }
+</script>
+<div id="cursor" class="cursor">
+    <div class="ring">
+        <div><!--Border--></div>
+    </div>
+    <div class="ring">
+        <div><!--Pointer--></div>		
+    </div>
+</div>
+<!-- partial -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script  src="./aboutme.js"></script>
+
+</body>
+</html>

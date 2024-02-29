@@ -1,0 +1,205 @@
+html {
+    cursor: none;
+    --text: #FFF;
+    background: #001220;
+    scroll-behavior: smooth;
+  }
+
+  .cursor {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 2.5rem;
+    height: 2.5rem;
+    z-index: 2;
+    pointer-events: none;
+  }
+  .cursor div {
+    position: absolute;
+    display: grid;
+    place-items: center;
+  }
+  .cursor div div {
+    border: 1px solid #fff;
+    border-radius: 50%;
+    animation: pulse 2.5s linear infinite;
+    box-shadow: 0 0 50px 5px #d7abff6e;
+  }
+  .cursor div:nth-child(1),
+  .cursor div:nth-child(2) {
+    width: 100%;
+    height: 100%;
+  }
+  .cursor div:nth-child(1) {
+    transition: transform 0.2s ease-out;
+  }
+  .cursor div:nth-child(2) {
+    transition: transform 0.1s ease-out;
+  }
+  .cursor div:nth-child(2) div {
+    background: #fff;
+    border-radius: 50%;
+    width: 4px;
+    height: 4px;
+  }
+
+  @import url("https://fonts.googleapis.com/css?family=Mukta:700");
+
+  /* Reset CSS */
+  * {
+    box-sizing: border-box;
+  }
+  *::before, *::after {
+    box-sizing: border-box;
+  }
+  
+  /* Body Styles */
+  body {
+    font-family: "Mukta", sans-serif;
+    font-size: 1rem;
+    line-height: 1.5;
+    margin: 0;
+    background: #f3f8fa;
+    position: relative; /* Ajout d'une position relative pour définir un contexte de positionnement */
+  }
+  
+  /* Bouton Styles */
+  button {
+    position: fixed; /* Position fixe pour rester en bas de la fenêtre */
+    bottom: 20px; /* Distance par rapport au bas */
+    right: 20px; /* Distance par rapport à droite */
+    display: inline-block;
+    cursor: pointer;
+    outline: none;
+    border: 0;
+    vertical-align: middle;
+    text-decoration: none;
+    background: transparent;
+    padding: 0;
+    font-size: inherit;
+    font-family: inherit;
+  }
+  button.learn-more {
+    width: 12rem;
+    height: auto;
+  }
+  button.learn-more .circle {
+    transition: all 0.45s cubic-bezier(0.65, 0, 0.076, 1);
+    position: relative;
+    display: block;
+    margin: 0;
+    width: 3rem;
+    height: 3rem;
+    background: #ffffff;
+    border-radius: 1.625rem;
+  }
+  button.learn-more .circle .icon {
+    transition: all 0.45s cubic-bezier(0.65, 0, 0.076, 1);
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    margin: auto;
+    background: #fff;
+  }
+  button.learn-more .circle .icon.arrow {
+    transition: all 0.45s cubic-bezier(0.65, 0, 0.076, 1);
+    left: 0.625rem;
+    width: 1.125rem;
+    height: 0.125rem;
+    background: none;
+  }
+  button.learn-more .circle .icon.arrow::before {
+    position: absolute;
+    content: "";
+    top: -0.25rem;
+    right: 0.0550rem;
+    width: 0.625rem;
+    height: 0.625rem;
+    border-top: 0.125rem solid #000000;
+    border-right: 0.125rem solid #000000;
+    transform: rotate(45deg);
+  }
+  button.learn-more .button-text {
+    transition: all 0.45s cubic-bezier(0.65, 0, 0.076, 1);
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    padding: 0.75rem 0;
+    margin: 0 0 0 1.85rem;
+    color: #ffffff;
+    font-weight: 700;
+    line-height: 1.6;
+    text-align: center;
+    text-transform: uppercase;
+  }
+  button:hover .circle {
+    width: 100%;
+  }
+  button:hover .circle .icon.arrow {
+    background: #ffffff;
+    transform: translate(1rem, 0);
+  }
+  button:hover .button-text {
+    color: #020202;
+  }
+
+  .open-button {
+    position: fixed;
+    top: 60px;
+    right: 60px;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: #ffffff;
+    color: #020202;
+    font-size: 24px;
+    border: none;
+    outline: none;
+    cursor: pointer;
+  }
+  
+  .popup {
+    display: none;
+    position: fixed;
+    top: 20%; /* Position verticale initiale */
+    right: 26%; /* Position horizontale initiale */
+    transform: translate(50%, -50%) scale(0); /* Déplacement vers le centre et échelle initiale à 0 */
+    background-color: rgba(0, 0, 0, 0.8);
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 20px;
+    width: 800px; /* Largeur de la fenêtre popup */
+  }
+  
+  .popup.active {
+    display: block;
+    animation: fadeInScale 0.3s ease forwards; /* Animation d'ouverture */
+  }
+  
+  .popup-content {
+    font-family: 'Share Tech Mono', monospace; /* Appliquer la police de caractères */
+    color : white;
+  }
+  
+  @keyframes fadeInScale {
+    0% {
+      transform: translate(50%, -50%) scale(0);
+      opacity: 0;
+    }
+    100% {
+      transform: translate(50%, -50%) scale(1);
+      opacity: 1;
+    }
+  }
+  
+  .close-button {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    background-color: transparent;
+    border: none;
+    outline: none;
+    cursor: pointer;
+  }
