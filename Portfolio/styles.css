@@ -33,6 +33,7 @@ html {
   animation-delay: 0.1s;
 }
 
+
 .animated-word {
   opacity: 0;
 }
@@ -130,50 +131,39 @@ nav ul li a {
 }
 
 .cursor {
-  display: none; /* Masquer le curseur sur les appareils mobiles */
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 2.5rem;
+  height: 2.5rem;
+  z-index: 2;
+  pointer-events: none;
 }
-
-/* Media Query pour les appareils mobiles */
-@media only screen and (max-width: 600px) {
-  .animated-title { 
-    font-size: 24px; /* Réduire la taille du titre sur les appareils mobiles */
-  }
-
-  nav ul {
-    display: flex; /* Utiliser flexbox pour aligner les éléments sur la même ligne */
-    flex-direction: column; /* Définir la direction de la flexbox en colonne */
-    align-items: center; /* Centrer les éléments horizontalement */
-  }
-  .menu-toggle {
-    display: block; /* Afficher le bouton de menu sur les petits écrans */
-    position: fixed; /* Positionnement fixe */
-    top: 10px; /* Espacement depuis le haut */
-    right: 10px; /* Espacement depuis la droite */
-    z-index: 9999; /* Assurer que le bouton est au-dessus de tout le reste */
-    color: white; /* Couleur du texte */
-    font-size: 20px; /* Taille de la police */
-    cursor: pointer; /* Curseur pointeur */
-  }
-
-  .menu-toggle span {
-    display: block;
-    width: 30px;
-    height: 3px;
-    background-color: white;
-    margin-bottom: 5px;
-  }
-
-  nav ul.open {
-    display: block; /* Afficher le menu lorsque la classe "open" est ajoutée */
-  }
-
-  nav ul li {
-    display: inline-block; /* Afficher les éléments de menu en ligne */
-    margin: 10px 0; /* Espacement entre les éléments */
-  }
-
-  nav ul li a {
-    display: block; /* Afficher les liens en bloc */
-    padding: 10px 0; /* Espacement intérieur des liens */
-  }
+.cursor div {
+  position: absolute;
+  display: grid;
+  place-items: center;
+}
+.cursor div div {
+  border: 1px solid #fff;
+  border-radius: 50%;
+  animation: pulse 2.5s linear infinite;
+  box-shadow: 0 0 50px 5px #d7abff6e;
+}
+.cursor div:nth-child(1),
+.cursor div:nth-child(2) {
+  width: 100%;
+  height: 100%;
+}
+.cursor div:nth-child(1) {
+  transition: transform 0.2s ease-out;
+}
+.cursor div:nth-child(2) {
+  transition: transform 0.1s ease-out;
+}
+.cursor div:nth-child(2) div {
+  background: #fff;
+  border-radius: 50%;
+  width: 4px;
+  height: 4px;
 }
