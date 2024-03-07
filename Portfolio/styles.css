@@ -140,9 +140,10 @@ nav ul li a {
   }
 
   nav ul {
-    display: none; /* Masquer le menu par défaut sur les petits écrans */
+    display: flex; /* Utiliser flexbox pour aligner les éléments sur la même ligne */
+    flex-direction: column; /* Définir la direction de la flexbox en colonne */
+    align-items: center; /* Centrer les éléments horizontalement */
   }
-
   .menu-toggle {
     display: block; /* Afficher le bouton de menu sur les petits écrans */
     position: fixed; /* Positionnement fixe */
@@ -167,7 +168,8 @@ nav ul li a {
   }
 
   nav ul li {
-    display: block; /* Afficher les éléments de menu en bloc */
+    display: inline-block; /* Afficher les éléments de menu en ligne */
+    margin: 10px 0; /* Espacement entre les éléments */
   }
 
   nav ul li a {
